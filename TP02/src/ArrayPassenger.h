@@ -126,10 +126,11 @@ void printOnePassenger(Passenger list);
 * \param int* id
 */
 int forcedData(Passenger* List,int len,int* id);
-int pedirDatos(Passenger* list);
 int loadUpPassenger(Passenger* list, int len,int* id);
 int findEmptyIndex(Passenger* list, int len);
 int modifyPassenger(Passenger* list,int len,int id);
 int findPassengerbyId(Passenger* list, int len, int id);
 int noData(Passenger* list, int len);
 int sortPassengersByLastName(Passenger* list, int len, int order);
+int sumPrices(Passenger* list , int len,float* totalPrices,float* promPrices );
+int aboveAveragePassenger(Passenger* list, int len, float average);

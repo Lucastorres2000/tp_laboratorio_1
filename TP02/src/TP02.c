@@ -25,6 +25,10 @@ int main(void) {
 	setbuf(stdout,NULL);
 	int id=1;
 	int bufferId;
+	float totalPrices;
+	float averagePrices;
+	int aboveAveragePrices;
+	int optionPrint;
 	Passenger PassengerList[AMOUNT_PASSENGER];
 	initPassengers(PassengerList,AMOUNT_PASSENGER);
 	char option;
@@ -55,8 +59,7 @@ int main(void) {
 	    switch (option)
 	 {
 	        case '1':
-	        	sortPassengersByLastName(PassengerList,AMOUNT_PASSENGER,1);
-	        	//loadUpPassenger(PassengerList,AMOUNT_PASSENGER,&id);
+	        	loadUpPassenger(PassengerList,AMOUNT_PASSENGER,&id);
 	            break;
 	        case '2':
 	        	if(noData(PassengerList,AMOUNT_PASSENGER)==TRUE)//checks that there is data loaded
@@ -94,9 +97,38 @@ int main(void) {
 
 	        case '4':
 	        	if(noData(PassengerList,AMOUNT_PASSENGER)){
-	        		printPassenger(PassengerList,AMOUNT_PASSENGER);
+	        		//if(utn_getNumber(&optionPrint,"Choose an option \n 1- alphabetically ordered \n 2- Total y Average \n 3-Order by flight code ","Error",0,3,3)==SUCCESS)
+	        		if(utn_getNumber(&optionPrint,"Choose an option \n 1- alphabetically ordered \n 2- Total y Average \n ","Error",0,2,3)==SUCCESS)
+	        		{
+
+
+
+	        					switch(optionPrint)
+	        					       {
+	        								case 1:
+	        										sortPassengersByLastName(PassengerList,AMOUNT_PASSENGER,1);
+
+	        										printf("\n----------------------------------------------------------------------------------------\n");
+	        										printf("\n%s %10s %10s %10s %10s %10s \n", "ID", "NAME", "LASTNAME", "PRICE", "FLYCODE","TYPEPASSENGER");
+
+	        										printPassenger(PassengerList,AMOUNT_PASSENGER);
+	        								break;
+
+	        								case 2:
+
+	        										sumPrices(PassengerList ,AMOUNT_PASSENGER,&totalPrices,&averagePrices );
+	        										aboveAveragePrices=aboveAveragePassenger(PassengerList ,AMOUNT_PASSENGER,averagePrices);
+	        										printf("Total Prices : %f \n",totalPrices);
+	        										printf("Total Average Prices  : %f \n ",averagePrices);
+	        										printf("Overall above average : %d ",aboveAveragePrices);
+
+	        					        		break;
+	        					       }
+	        		}
+
 	        	}else{
-	        		printf("no lo hay ");
+
+	        				printf("no se puede mostrar sin primero hacer una carga \n");
 	        	}
 	        	//
 	         //   printf("\n----------------------------------------------------------------------------------------\n");
@@ -105,6 +137,9 @@ int main(void) {
 					break;
 	        case '5':
 	        	forcedData(PassengerList,AMOUNT_PASSENGER,&id);
+	        	break;
+	        case '6':
+	        	printf("CERRANDO APLICACION... ");
 	        	break;
 	 }
 

@@ -17,6 +17,7 @@ int i;
  char  lastName[][NLEN] = {"Novak","Connor","Lum","Forbis","Green","King","White","Stone","Garfield"};
  int idAux [10]={27,89,21,34,78,95,37,54,78};
  char flycode[][NLEN]={"AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III"};
+ int typePassenger[10]={1,2,1,2,1,2,1,2,1};
  float price [10]={2000,3000,4000,5000,6000,7000,8000,9000};
 
  for(i=0;i<len;i++){
@@ -26,6 +27,7 @@ int i;
 	 List[i].price = price[i];
 	 strcpy(List[i].flycode,flycode[i]);
 	 List[i].id = idAux[i];
+	 List[i].typePassenger= typePassenger[i];
 	 List[i].isEmpty=FALSE;
 	 (*id)++;
  }
@@ -35,11 +37,12 @@ int i;
 };
 
 void printOnePassenger(Passenger list){
-printf("%5d %10s %10s %10.2f %10s\n", list.id,
+printf("%5d %10s %10s %10.2f %10s %10d \n", list.id,
 		                               list.name,
 		                               list.lastName,
 		                               list.price,
-		                               list.flycode);
+		                               list.flycode,
+									   list.typePassenger);
 
 
 
@@ -269,9 +272,8 @@ int sortPassengersByLastName(Passenger* list, int len, int order)
 
 	if (list != NULL)
 		{
-			if (len >= 0)
-			{
-				if (order == 1)
+
+				if (order == 1 && len >= 0)
 				{
 					for (int i = 0; i < len; i++)
 					{
@@ -321,7 +323,56 @@ int sortPassengersByLastName(Passenger* list, int len, int order)
 				}
 				retorno = 0;
 			}
-		}
+
 
 	return retorno;
 };
+int sumPrices(Passenger* list , int len,float* totalPrices,float* promPrices  ){
+
+	int contador=0;
+	int retorno = ERROR;
+	float auxTotalPrices=0;
+	int i;
+
+	 	 if(list != NULL  && len > 0)
+	 	 {
+
+	 		 	 for(i=0;i<len;i++)
+	 		 	 {
+
+						if(list[i].isEmpty == FALSE && list[i].price > 0 )
+						{
+							contador++;
+							auxTotalPrices =auxTotalPrices  + list[i].price;
+							retorno = SUCCESS;
+						}
+
+	 		 	 }
+
+	 	 }
+	 	 *totalPrices=auxTotalPrices;
+	 	 *promPrices=auxTotalPrices / contador;
+return retorno;
+}
+int aboveAveragePassenger(Passenger* list, int len, float average)
+{
+	int retorno = ERROR;
+	int counter = 0;
+
+	if(list != NULL)
+	{
+		if(len > 0)
+		{
+			for(int i = 0; i < len; i++)
+			{
+				if(list[i].isEmpty == FALSE  && list[i].price > average)
+				{
+					counter++;
+					retorno = counter;
+				}
+			}
+		}
+	}
+
+	return retorno;
+}
